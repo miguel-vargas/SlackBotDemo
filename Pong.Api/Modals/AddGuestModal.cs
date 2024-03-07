@@ -13,15 +13,18 @@ internal static class AddGuestModal
 	internal const string BusinessJustificationInputActionId = "guest_reason_input";
 	internal const string ExpirationDatePickerActionId = "expiration_date_picker";
 
-	internal static ModalViewDefinition ModalView(string channelId, string channelName) => new()
+	internal static ModalViewDefinition ModalView(string channelId, string channelName)
 	{
-		Title = "Add Guest",
-		CallbackId = AddGuestModalCallbackId,
-		Blocks = Blocks,
-		Submit = "Submit",
-		NotifyOnClose = false,
-		PrivateMetadata = JsonSerializer.Serialize(new ModalMetadata(channelId, channelName)),
-	};
+		return new ModalViewDefinition
+		{
+			Title = "Add Guest",
+			CallbackId = AddGuestModalCallbackId,
+			Blocks = Blocks,
+			Submit = "Submit",
+			NotifyOnClose = false,
+			PrivateMetadata = JsonSerializer.Serialize(new ModalMetadata(channelId, channelName)),
+		};
+	}
 
 	private static List<Block> Blocks =>
 	[

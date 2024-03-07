@@ -17,7 +17,8 @@ public class AddGuestHandler(ISlackApiClient slackApiClient, IOptions<SlackConfi
 
 	public async Task<SlashCommandResponse> Handle(SlashCommand command)
 	{
-		await slackApiClient.Views.Open(command.TriggerId, AddGuestModal.ModalView(command.ChannelId, command.ChannelName));
+		await slackApiClient.Views.Open(command.TriggerId,
+			AddGuestModal.ModalView(command.ChannelId, command.ChannelName));
 		return new SlashCommandResponse();
 	}
 
@@ -34,7 +35,7 @@ public class AddGuestHandler(ISlackApiClient slackApiClient, IOptions<SlackConfi
 	public async Task<ViewSubmissionResponse> Handle(ViewSubmission viewSubmission)
 	{
 		var metadata = JsonSerializer.Deserialize<ModalMetadata>(viewSubmission.View.PrivateMetadata);
-		
+
 		var state = viewSubmission.View.State;
 		var expirationDate = state.GetValue<DatePickerValue>(AddGuestModal.ExpirationDatePickerActionId).SelectedDate;
 		var requestorId = viewSubmission.User.Id;
@@ -42,7 +43,8 @@ public class AddGuestHandler(ISlackApiClient slackApiClient, IOptions<SlackConfi
 		var requestSubmissionMessage = await slackApiClient.Chat.PostMessage(new Message
 		{
 			Channel = metadata.ChannelId,
-			Text = $"<@{requestorId}> your request has been submitted and will be reviewed. This thread will be updated once a decision has been made.",
+			Text =
+				$"<@{requestorId}> your request has been submitted and will be reviewed. This thread will be updated once a decision has been made.",
 		});
 
 		var formValues = new AddGuestForm
@@ -62,7 +64,7 @@ public class AddGuestHandler(ISlackApiClient slackApiClient, IOptions<SlackConfi
 			Channel = options.Value.AddGuestAdminChannel,
 			Text = $"Submitted {formValues}",
 		});
-		
+
 		return ViewSubmissionResponse.Null;
 	}
 
