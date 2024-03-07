@@ -1,3 +1,5 @@
+using System.Text.Json;
+using Pong.Api.Models;
 using SlackNet;
 using SlackNet.Blocks;
 
@@ -5,15 +7,20 @@ namespace Pong.Api.Modals;
 
 internal static class AddGuestModal
 {
+	internal const string AddGuestModalCallbackId = "add_guest_modal";
+	internal const string GuestEmailInputActionId = "guest_email_input";
+	internal const string ChannelSelectActionId = "channel_select_menu";
+	internal const string BusinessJustificationInputActionId = "guest_reason_input";
 	internal const string ExpirationDatePickerActionId = "expiration_date_picker";
 
-	internal static ModalViewDefinition ModalView => new()
+	internal static ModalViewDefinition ModalView(string channelId, string channelName) => new()
 	{
 		Title = "Add Guest",
-		CallbackId = "add_guest_modal",
+		CallbackId = AddGuestModalCallbackId,
 		Blocks = Blocks,
 		Submit = "Submit",
 		NotifyOnClose = false,
+		PrivateMetadata = JsonSerializer.Serialize(new ModalMetadata(channelId, channelName)),
 	};
 
 	private static List<Block> Blocks =>
@@ -25,7 +32,7 @@ internal static class AddGuestModal
 			Optional = false,
 			Element = new PlainTextInput
 			{
-				ActionId = "guest_email_input",
+				ActionId = GuestEmailInputActionId,
 				Placeholder = "Enter the guest email.",
 			},
 		},
@@ -37,7 +44,7 @@ internal static class AddGuestModal
 			Optional = false,
 			Element = new ChannelSelectMenu
 			{
-				ActionId = "channel_select_menu",
+				ActionId = ChannelSelectActionId,
 				Placeholder = "Select the channel.",
 			},
 		},
@@ -49,7 +56,7 @@ internal static class AddGuestModal
 			Optional = true,
 			Element = new PlainTextInput
 			{
-				ActionId = "guest_email_input",
+				ActionId = BusinessJustificationInputActionId,
 				Placeholder = "Please enter a business justification.",
 			},
 		},
