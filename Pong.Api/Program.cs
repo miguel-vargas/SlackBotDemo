@@ -6,7 +6,8 @@ using SlackNet.Blocks;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var slackConfiguration = builder.Configuration.GetSection("Slack").Get<SlackConfiguration>() ??
+var slackSection = builder.Configuration.GetSection("Slack");
+var slackConfiguration = slackSection.Get<SlackConfiguration>() ??
                          throw new NullReferenceException("Slack configuration missing.");
 
 // Add services to the container.
@@ -15,7 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton(new SlackEndpointConfiguration());
+builder.Services.Configure<SlackConfiguration>(slackSection);
 
 builder.Services.AddSlackNet(c =>
 {
@@ -23,6 +24,7 @@ builder.Services.AddSlackNet(c =>
 	c.UseAppLevelToken(slackConfiguration.AppToken);
 	c.RegisterBlockActionHandler<DatePickerAction, AddGuestHandler>(AddGuestModal.ExpirationDatePickerActionId);
 	c.RegisterSlashCommandHandler<AddGuestHandler>(AddGuestHandler.AddGuestCommand);
+	c.RegisterViewSubmissionHandler<AddGuestHandler>(AddGuestModal.AddGuestModalCallbackId);
 });
 
 var app = builder.Build();
