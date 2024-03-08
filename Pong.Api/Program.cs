@@ -29,6 +29,9 @@ builder.Services.AddSlackNet(c =>
 	c.RegisterBlockActionHandler<DatePickerAction, AddGuestHandler>(AddGuestRequest.ExpirationDatePickerActionId);
 	c.RegisterSlashCommandHandler<AddGuestHandler>(AddGuestHandler.AddGuestCommand);
 	c.RegisterViewSubmissionHandler<AddGuestHandler>(SlackModalService.AddGuestModalCallbackId);
+	c.RegisterBlockActionHandler<ButtonAction, AddGuestAdminHandler>(AddGuestAdminRequest.AdminDenyRequestActionId);
+	c.RegisterBlockActionHandler<ButtonAction, AddGuestAdminHandler>(AddGuestAdminRequest.AdminApproveRequestActionId);
+
 });
 
 var app = builder.Build();

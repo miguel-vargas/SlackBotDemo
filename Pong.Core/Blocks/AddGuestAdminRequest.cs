@@ -3,10 +3,12 @@ using SlackNet.Blocks;
 
 namespace Pong.Core.Blocks;
 
-internal static class AddGuestAdminRequest
+public static class AddGuestAdminRequest
 {
-	internal const string AdminDenyRequestActionId = "admin_deny_request_action";
-	internal const string AdminApproveRequestActionId = "admin_approve_request_action";
+	public const string AdminDenyRequestActionId = "admin_deny_request_action";
+	public const string AdminApproveRequestActionId = "admin_approve_request_action";
+	public const string AdminDenyValue = "Deny";
+	public const string AdminApproveValue = "Approve";
 	
 	internal static List<Block> Blocks(string message, AddGuestForm addGuestForm)
 	{
@@ -27,13 +29,13 @@ internal static class AddGuestAdminRequest
 					new Button
 					{
 						ActionId = AdminDenyRequestActionId,
-						Value = "Deny",
+						Value = AdminDenyValue,
 						Text = "Deny",
 					},
 					new Button
 					{
 						ActionId = AdminApproveRequestActionId,
-						Value = "Approve",
+						Value = AdminApproveValue,
 						Text = "Approve",
 					},
 				},
