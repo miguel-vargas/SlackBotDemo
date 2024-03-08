@@ -6,6 +6,7 @@ using Pong.Api.Services.Interfaces;
 using SlackNet;
 using SlackNet.Blocks;
 using SlackNet.Interaction;
+using SlackNet.WebApi;
 
 namespace Pong.Api.Handlers;
 
@@ -23,7 +24,7 @@ public class AddGuestHandler(
 	{
 		var addGuestFormModal = slackModalService.CreateAddGuestFormModal(command.ChannelId, command.ChannelName);
 		await slackApiClient.Views.Open(command.TriggerId, addGuestFormModal);
-		return new SlashCommandResponse();
+		return new SlashCommandResponse{ Message = new Message{ Text = "Initiated Add Guest Command"}};
 	}
 
 	public async Task Handle(DatePickerAction action, BlockActionRequest request)
