@@ -1,7 +1,7 @@
-using Pong.Api.Models;
+using Pong.Core.Models;
 using SlackNet.WebApi;
 
-namespace Pong.Api.Services.Interfaces;
+namespace Pong.Core.Services.Interfaces;
 
 public interface ISlackMessageService
 {

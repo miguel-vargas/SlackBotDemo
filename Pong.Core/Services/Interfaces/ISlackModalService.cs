@@ -1,6 +1,6 @@
 using SlackNet;
 
-namespace Pong.Api.Services.Interfaces;
+namespace Pong.Core.Services.Interfaces;
 
 public interface ISlackModalService
 {

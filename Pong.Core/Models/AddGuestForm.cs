@@ -1,4 +1,4 @@
-namespace Pong.Api.Models;
+namespace Pong.Core.Models;
 
 public record AddGuestForm
 {

@@ -1,7 +1,7 @@
-using Pong.Api.Models;
+using Pong.Core.Models;
 using SlackNet.Blocks;
 
-namespace Pong.Api.Blocks;
+namespace Pong.Core.Blocks;
 
 internal static class AddGuestAdminRequest
 {

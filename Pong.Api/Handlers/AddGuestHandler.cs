@@ -1,8 +1,8 @@
 using System.Text.Json;
 using Microsoft.Extensions.Options;
-using Pong.Api.Blocks;
-using Pong.Api.Models;
-using Pong.Api.Services.Interfaces;
+using Pong.Core.Blocks;
+using Pong.Core.Models;
+using Pong.Core.Services.Interfaces;
 using SlackNet;
 using SlackNet.Blocks;
 using SlackNet.Interaction;

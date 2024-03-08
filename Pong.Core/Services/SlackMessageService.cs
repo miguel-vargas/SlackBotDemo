@@ -1,10 +1,10 @@
 using System.Text;
-using Pong.Api.Blocks;
-using Pong.Api.Models;
-using Pong.Api.Services.Interfaces;
+using Pong.Core.Blocks;
+using Pong.Core.Models;
+using Pong.Core.Services.Interfaces;
 using SlackNet.WebApi;
 
-namespace Pong.Api.Services;
+namespace Pong.Core.Services;
 
 public class SlackMessageService : ISlackMessageService
 {

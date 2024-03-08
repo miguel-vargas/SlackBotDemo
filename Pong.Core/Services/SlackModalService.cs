@@ -1,15 +1,15 @@
 using System.Text.Json;
-using Pong.Api.Blocks;
-using Pong.Api.Models;
-using Pong.Api.Services.Interfaces;
+using Pong.Core.Blocks;
+using Pong.Core.Models;
+using Pong.Core.Services.Interfaces;
 using SlackNet;
 using SlackNet.Blocks;
 
-namespace Pong.Api.Services;
+namespace Pong.Core.Services;
 
 public class SlackModalService : ISlackModalService
 {
-	internal const string AddGuestModalCallbackId = "add_guest_modal";
+	public const string AddGuestModalCallbackId = "add_guest_modal";
 
 	public ModalViewDefinition CreateAddGuestFormModal(string channelId, string channelName)
 	{

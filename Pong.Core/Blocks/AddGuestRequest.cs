@@ -1,13 +1,13 @@
 using SlackNet.Blocks;
 
-namespace Pong.Api.Blocks;
+namespace Pong.Core.Blocks;
 
-internal static class AddGuestRequest
+public static class AddGuestRequest
 {
-	internal const string GuestEmailInputActionId = "guest_email_input";
-	internal const string ChannelSelectActionId = "channel_select_menu";
-	internal const string BusinessJustificationInputActionId = "guest_reason_input";
-	internal const string ExpirationDatePickerActionId = "expiration_date_picker";
+	public const string GuestEmailInputActionId = "guest_email_input";
+	public const string ChannelSelectActionId = "channel_select_menu";
+	public const string BusinessJustificationInputActionId = "guest_reason_input";
+	public const string ExpirationDatePickerActionId = "expiration_date_picker";
 
 	internal static List<Block> Blocks =>
 	[
