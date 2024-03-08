@@ -1,12 +1,14 @@
 using Pong.Api;
+using Pong.Api.Blocks;
 using Pong.Api.Handlers;
-using Pong.Api.Modals;
+using Pong.Api.Services;
+using Pong.Api.Services.Interfaces;
 using SlackNet.AspNetCore;
 using SlackNet.Blocks;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var slackSection = builder.Configuration.GetSection("Slack");
+var slackSection = builder.Configuration.GetSection(SlackConfiguration.SlackConfigKey);
 var slackConfiguration = slackSection.Get<SlackConfiguration>() ??
                          throw new NullReferenceException("Slack configuration missing.");
 
@@ -16,15 +18,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<ISlackMessageService, SlackMessageService>();
+builder.Services.AddScoped<ISlackModalService, SlackModalService>();
 builder.Services.Configure<SlackConfiguration>(slackSection);
 
 builder.Services.AddSlackNet(c =>
 {
 	c.UseApiToken(slackConfiguration.AccessToken);
 	c.UseAppLevelToken(slackConfiguration.AppToken);
-	c.RegisterBlockActionHandler<DatePickerAction, AddGuestHandler>(AddGuestModal.ExpirationDatePickerActionId);
+	c.RegisterBlockActionHandler<DatePickerAction, AddGuestHandler>(AddGuestRequest.ExpirationDatePickerActionId);
 	c.RegisterSlashCommandHandler<AddGuestHandler>(AddGuestHandler.AddGuestCommand);
-	c.RegisterViewSubmissionHandler<AddGuestHandler>(AddGuestModal.AddGuestModalCallbackId);
+	c.RegisterViewSubmissionHandler<AddGuestHandler>(SlackModalService.AddGuestModalCallbackId);
 });
 
 var app = builder.Build();

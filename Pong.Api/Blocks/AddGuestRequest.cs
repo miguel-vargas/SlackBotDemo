@@ -1,32 +1,15 @@
-using System.Text.Json;
-using Pong.Api.Models;
-using SlackNet;
 using SlackNet.Blocks;
 
-namespace Pong.Api.Modals;
+namespace Pong.Api.Blocks;
 
-internal static class AddGuestModal
+internal static class AddGuestRequest
 {
-	internal const string AddGuestModalCallbackId = "add_guest_modal";
 	internal const string GuestEmailInputActionId = "guest_email_input";
 	internal const string ChannelSelectActionId = "channel_select_menu";
 	internal const string BusinessJustificationInputActionId = "guest_reason_input";
 	internal const string ExpirationDatePickerActionId = "expiration_date_picker";
 
-	internal static ModalViewDefinition ModalView(string channelId, string channelName)
-	{
-		return new ModalViewDefinition
-		{
-			Title = "Add Guest",
-			CallbackId = AddGuestModalCallbackId,
-			Blocks = Blocks,
-			Submit = "Submit",
-			NotifyOnClose = false,
-			PrivateMetadata = JsonSerializer.Serialize(new ModalMetadata(channelId, channelName)),
-		};
-	}
-
-	private static List<Block> Blocks =>
+	internal static List<Block> Blocks =>
 	[
 		new InputBlock
 		{
