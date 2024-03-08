@@ -1,6 +1,6 @@
-using Pong.Api;
-using Pong.Api.Handlers;
 using Pong.Core.Blocks;
+using Pong.Core.Handlers;
+using Pong.Core.Models;
 using Pong.Core.Services;
 using Pong.Core.Services.Interfaces;
 using SlackNet.AspNetCore;

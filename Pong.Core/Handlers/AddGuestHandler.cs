@@ -8,7 +8,7 @@ using SlackNet.Blocks;
 using SlackNet.Interaction;
 using SlackNet.WebApi;
 
-namespace Pong.Api.Handlers;
+namespace Pong.Core.Handlers;
 
 public class AddGuestHandler(
 	ISlackApiClient slackApiClient,

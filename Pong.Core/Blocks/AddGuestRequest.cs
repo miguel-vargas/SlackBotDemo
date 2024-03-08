@@ -4,9 +4,9 @@ namespace Pong.Core.Blocks;
 
 public static class AddGuestRequest
 {
-	public const string GuestEmailInputActionId = "guest_email_input";
-	public const string ChannelSelectActionId = "channel_select_menu";
-	public const string BusinessJustificationInputActionId = "guest_reason_input";
+	internal const string GuestEmailInputActionId = "guest_email_input";
+	internal const string ChannelSelectActionId = "channel_select_menu";
+	internal const string BusinessJustificationInputActionId = "guest_reason_input";
 	public const string ExpirationDatePickerActionId = "expiration_date_picker";
 
 	internal static List<Block> Blocks =>
