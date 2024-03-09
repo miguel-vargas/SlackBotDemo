@@ -10,10 +10,10 @@ public static class AddGuestAdminRequest
 	public const string AdminDenyValue = "Deny";
 	public const string AdminApproveValue = "Approve";
 	
-	internal static List<Block> Blocks(string message)
+	internal static IList<Block> Blocks(string message, bool renderActionsBlock, string requestAction)
 	{
-		return
-		[
+		var blocks = new List<Block>
+		{
 			new HeaderBlock
 			{
 				Text = "New Guest Request :incoming_envelope:",
@@ -22,7 +22,11 @@ public static class AddGuestAdminRequest
 			{
 				Text = new Markdown(message),
 			},
-			new ActionsBlock
+		};
+
+		if (renderActionsBlock)
+		{
+			blocks.Add(new ActionsBlock
 			{
 				Elements =
 				{
@@ -39,7 +43,16 @@ public static class AddGuestAdminRequest
 						Text = "Approve",
 					},
 				},
-			},
-		];
+			});
+		}
+		else
+		{
+			blocks.Add(new SectionBlock
+			{
+				Text = $"This request has been {requestAction}.",
+			});
+		}
+		
+		return blocks;
 	}
 }

@@ -25,8 +25,30 @@ public class SlackMessageService : ISlackMessageService
 		return new Message
 		{
 			Channel = addGuestAdminChannel,
-			Blocks = AddGuestAdminRequest.Blocks(addGuestForm.ToMarkdownString()),
+			Blocks = AddGuestAdminRequest.Blocks(addGuestForm.ToMarkdownString(), true, ""),
 			MetadataJson = MessageMetadata.FromObject(addGuestForm),
+		};
+	}
+
+	public Message CreateRequestReplyMessage(string requestorId, string channelId, string threadTs, string requestAction)
+	{
+		return new Message
+		{
+			Channel = channelId,
+			ThreadTs = threadTs,
+			Text =
+				$"<@{requestorId}> your request has been {requestAction}.",
+		};
+	}
+
+	public MessageUpdate CreateUpdatedAdminRequest(string addGuestAdminChannelId, string originalMessageTs,
+		AddGuestForm addGuestForm, string requestAction)
+	{
+		return new MessageUpdate
+		{
+			ChannelId = addGuestAdminChannelId,
+			Ts = originalMessageTs,
+			Blocks = AddGuestAdminRequest.Blocks(addGuestForm.ToMarkdownString(), false, requestAction),
 		};
 	}
 }

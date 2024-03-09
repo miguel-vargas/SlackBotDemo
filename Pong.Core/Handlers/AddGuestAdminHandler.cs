@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.Extensions.Options;
 using Pong.Core.Blocks;
 using Pong.Core.Models;
 using Pong.Core.Services;
@@ -6,13 +7,15 @@ using Pong.Core.Services.Interfaces;
 using SlackNet;
 using SlackNet.Blocks;
 using SlackNet.Interaction;
+using SlackNet.WebApi;
 
 namespace Pong.Core.Handlers;
 
 public class AddGuestAdminHandler(
 	ISlackApiClient slackApiClient,
 	ISlackMessageService slackMessageService,
-	ISlackModalService slackModalService)
+	ISlackModalService slackModalService,
+	IOptions<SlackConfiguration> options)
 	: IBlockActionHandler<ButtonAction>, IViewSubmissionHandler
 {
 	public async Task Handle(ButtonAction action, BlockActionRequest request)
@@ -68,9 +71,11 @@ public class AddGuestAdminHandler(
 	
 	private async Task HandleGuestDenialConfirmation(ViewSubmission viewSubmission, AdminConfirmationMetadata adminConfirmationMetadata)
 	{
-		// var adminApprovalModal =
-		// 	slackModalService.CreateAdminApprovalModal(request.Message.Metadata.ToObject<AddGuestForm>());
-		// await slackApiClient.Views.Open(request.TriggerId, adminApprovalModal);
+		var updatedAdminRequestMessage = slackMessageService.CreateUpdatedAdminRequest(options.Value.AddGuestAdminChannel, adminConfirmationMetadata.AdminRequestTs, adminConfirmationMetadata.AddGuestForm, "denied");
+		await slackApiClient.Chat.Update(updatedAdminRequestMessage);
+		await slackApiClient.Chat.PostMessage(slackMessageService.CreateRequestReplyMessage(
+			adminConfirmationMetadata.AddGuestForm.RequestorId, adminConfirmationMetadata.AddGuestForm.RequestorChannel,
+			adminConfirmationMetadata.AddGuestForm.RequestThreadTimestamp, "denied"));
 	}
 	
 	private async Task HandleGuestApproval(BlockActionRequest request)
@@ -82,8 +87,10 @@ public class AddGuestAdminHandler(
 	
 	private async Task HandleGuestApprovalConfirmation(ViewSubmission viewSubmission, AdminConfirmationMetadata adminConfirmationMetadata)
 	{
-		// var adminApprovalModal =
-		// 	slackModalService.CreateAdminApprovalModal(request.Message.Metadata.ToObject<AddGuestForm>());
-		// await slackApiClient.Views.Open(request.TriggerId, adminApprovalModal);
+		var updatedAdminRequestMessage = slackMessageService.CreateUpdatedAdminRequest(options.Value.AddGuestAdminChannel, adminConfirmationMetadata.AdminRequestTs, adminConfirmationMetadata.AddGuestForm, "approved");
+		await slackApiClient.Chat.Update(updatedAdminRequestMessage);
+		await slackApiClient.Chat.PostMessage(slackMessageService.CreateRequestReplyMessage(
+			adminConfirmationMetadata.AddGuestForm.RequestorId, adminConfirmationMetadata.AddGuestForm.RequestorChannel,
+			adminConfirmationMetadata.AddGuestForm.RequestThreadTimestamp, "approved"));
 	}
 }
