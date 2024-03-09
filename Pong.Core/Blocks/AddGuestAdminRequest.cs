@@ -10,7 +10,7 @@ public static class AddGuestAdminRequest
 	public const string AdminDenyValue = "Deny";
 	public const string AdminApproveValue = "Approve";
 	
-	internal static List<Block> Blocks(string message, AddGuestForm addGuestForm)
+	internal static List<Block> Blocks(string message)
 	{
 		return
 		[

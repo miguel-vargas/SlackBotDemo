@@ -20,31 +20,27 @@ public class AddGuestAdminHandler(
 		switch (action.Value)
 		{
 			case AddGuestAdminRequest.AdminDenyValue:
-				await HandleGuestDenial(request.Channel.Id);
+				await HandleGuestDenial(request);
 				break;
 			case AddGuestAdminRequest.AdminApproveValue:
-				await HandleGuestApproval(request.Channel.Id);
+				await HandleGuestApproval(request);
 				break;
 			default:
 				break;
 		}
 	}
 
-	private async Task HandleGuestDenial(string channelId)
-	{ 
-		await slackApiClient.Chat.PostMessage(new Message
-		{
-			Channel = channelId,
-			Text = "Deny Hit",
-		});
+	private async Task HandleGuestDenial(BlockActionRequest request)
+	{
+		var adminDenialModal =
+			slackModalService.CreateAdminDenialModal(request.Message.Metadata.ToObject<AddGuestForm>());
+		await slackApiClient.Views.Open(request.TriggerId, adminDenialModal);
 	}
 	
-	private async Task HandleGuestApproval(string channelId)
+	private async Task HandleGuestApproval(BlockActionRequest request)
 	{
-		await slackApiClient.Chat.PostMessage(new Message
-		{
-			Channel = channelId,
-			Text = "Approve Hit",
-		});
+		var adminApprovalModal =
+			slackModalService.CreateAdminApprovalModal(request.Message.Metadata.ToObject<AddGuestForm>());
+		await slackApiClient.Views.Open(request.TriggerId, adminApprovalModal);
 	}
 }
