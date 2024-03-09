@@ -31,8 +31,8 @@ builder.Services.AddSlackNet(c =>
 	c.RegisterViewSubmissionHandler<AddGuestHandler>(SlackModalService.AddGuestModalCallbackId);
 	c.RegisterBlockActionHandler<ButtonAction, AddGuestAdminHandler>(AddGuestAdminRequest.AdminDenyRequestActionId);
 	c.RegisterBlockActionHandler<ButtonAction, AddGuestAdminHandler>(AddGuestAdminRequest.AdminApproveRequestActionId);
-	// c.RegisterViewSubmissionHandler<AddGuestAdminHandler>(SlackModalService.AdminDenialModalCallbackId);
-	// c.RegisterViewSubmissionHandler<AddGuestAdminHandler>(SlackModalService.AdminApprovalModalCallbackId);
+	c.RegisterViewSubmissionHandler<AddGuestAdminHandler>(SlackModalService.AdminDenialModalCallbackId);
+	c.RegisterViewSubmissionHandler<AddGuestAdminHandler>(SlackModalService.AdminApprovalModalCallbackId);
 
 });
 

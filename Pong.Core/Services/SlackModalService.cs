@@ -27,7 +27,7 @@ public class SlackModalService : ISlackModalService
 		};
 	}
 	
-	public ModalViewDefinition CreateAdminDenialModal(AddGuestForm addGuestForm)
+	public ModalViewDefinition CreateAdminDenialModal(string adminRequestTs, AddGuestForm addGuestForm)
 	{
 		return new ModalViewDefinition
 		{
@@ -36,11 +36,11 @@ public class SlackModalService : ISlackModalService
 			Blocks = AdminActionRequest.Blocks(addGuestForm.ToMarkdownString()),
 			Submit = "Submit",
 			NotifyOnClose = false,
-			PrivateMetadata = JsonSerializer.Serialize(addGuestForm),
+			PrivateMetadata = JsonSerializer.Serialize(new AdminConfirmationMetadata(adminRequestTs, addGuestForm)),
 		};
 	}
 	
-	public ModalViewDefinition CreateAdminApprovalModal(AddGuestForm addGuestForm)
+	public ModalViewDefinition CreateAdminApprovalModal(string adminRequestTs, AddGuestForm addGuestForm)
 	{
 		return new ModalViewDefinition
 		{
@@ -49,7 +49,7 @@ public class SlackModalService : ISlackModalService
 			Blocks = AdminActionRequest.Blocks(addGuestForm.ToMarkdownString()),
 			Submit = "Submit",
 			NotifyOnClose = false,
-			PrivateMetadata = JsonSerializer.Serialize(addGuestForm),
+			PrivateMetadata = JsonSerializer.Serialize(new AdminConfirmationMetadata(adminRequestTs, addGuestForm)),
 		};
 	}
 	
