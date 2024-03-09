@@ -20,7 +20,7 @@ public class SlackModalService : ISlackModalService
 			Blocks = AddGuestRequest.Blocks,
 			Submit = "Submit",
 			NotifyOnClose = false,
-			PrivateMetadata = JsonSerializer.Serialize(new ModalMetadata(channelId, channelName)),
+			PrivateMetadata = JsonSerializer.Serialize(new ChannelMetadata(channelId, channelName)),
 		};
 	}
 	

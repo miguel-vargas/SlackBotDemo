@@ -31,7 +31,7 @@ public class AddGuestAdminHandler(
 	}
 
 	private async Task HandleGuestDenial(string channelId)
-	{
+	{ 
 		await slackApiClient.Chat.PostMessage(new Message
 		{
 			Channel = channelId,

@@ -40,7 +40,7 @@ public class AddGuestHandler(
 
 	public async Task<ViewSubmissionResponse> Handle(ViewSubmission viewSubmission)
 	{
-		var metadata = JsonSerializer.Deserialize<ModalMetadata>(viewSubmission.View.PrivateMetadata);
+		var metadata = JsonSerializer.Deserialize<ChannelMetadata>(viewSubmission.View.PrivateMetadata);
 
 		if (metadata == null)
 		{
